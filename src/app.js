@@ -4,7 +4,7 @@ import urlRoutes from './routes/urlRoutes.js';
 
 // If your server crashed on the last attempt, change this path to exactly match where your file is!
 // For example: import { getUrlByCode } from './services/urlServices.js';
-import { getUrlByCode } from './urlServices.js'; 
+import { getUrlByCode } from './services/urlServices.js'; 
 
 const app = express();
 app.use(express.json());
