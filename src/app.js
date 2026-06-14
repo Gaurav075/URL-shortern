@@ -1,27 +1,29 @@
-import express from 'express'
-import urlRoutes from './routes/urlRoutes.js'
-import { getUrlByCode } from './services/urlServices.js'; // Adjust path if your folder is named differently
+import express from 'express';
+import path from 'path';
+import urlRoutes from './routes/urlRoutes.js';
+
+// If your server crashed on the last attempt, change this path to exactly match where your file is!
+// For example: import { getUrlByCode } from './services/urlServices.js';
+import { getUrlByCode } from './urlServices.js'; 
 
 const app = express();
 app.use(express.json());
 
-// 1. Your API routes
+// 🟢 CRITICAL FIX: Serve the frontend files FIRST so the button works
+app.use(express.static('public'));
+
+// 🟢 Your API routes
 app.use('/api', urlRoutes);
 
-// 2. The Redirect Route! 
-// This catches any root URL parameter (like /8rOrcN) and looks it up
+// 🔴 The Redirect Route (MUST BE LAST so it doesn't swallow script.js!)
 app.get('/:code', async (req, res) => {
     try {
         const shortCode = req.params.code;
-        
-        // Fetch the original URL from Redis
         const originalUrl = await getUrlByCode(shortCode);
 
         if (originalUrl) {
-            // If we found it, redirect the user's browser!
             return res.redirect(originalUrl);
         } else {
-            // If it's not in Redis, show an error
             return res.status(404).send('<h1>404 - URL Not Found or Expired</h1>');
         }
     } catch (error) {
