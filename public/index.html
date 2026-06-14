@@ -5,77 +5,144 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>URL Shortener</title>
   <style>
+    /* Importing a clean, modern font */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
+      font-family: 'Inter', sans-serif;
+      /* Smooth, deep tech gradient background */
+      background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+      background-size: 200% 200%;
+      animation: gradientShift 10s ease infinite;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       min-height: 100vh;
-      padding-top: 50px;
       margin: 0;
+      color: #ffffff;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      /* Glassmorphism Effect */
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 420px;
+      box-sizing: border-box;
     }
 
     h1 {
-      color: #333;
-      margin-bottom: 20px;
+      margin: 0 0 25px 0;
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: -0.5px;
+      background: linear-gradient(to right, #00f2fe, #4facfe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     form {
-      background: white;
-      padding: 20px 30px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
       gap: 15px;
       width: 100%;
-      max-width: 400px;
     }
 
     input[type="url"] {
-      padding: 12px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 15px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      color: white;
       outline: none;
-      transition: border-color 0.3s ease;
+      transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+    }
+
+    input[type="url"]::placeholder {
+      color: rgba(255, 255, 255, 0.5);
     }
 
     input[type="url"]:focus {
-      border-color: #007bff;
+      border-color: #4facfe;
+      box-shadow: 0 0 10px rgba(79, 172, 254, 0.3);
+      background: rgba(0, 0, 0, 0.4);
     }
 
     button {
-      background: #007bff;
-      color: white;
-      padding: 12px;
+      background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+      color: #0f2027;
+      font-weight: 600;
+      padding: 14px;
       font-size: 16px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      font-family: 'Inter', sans-serif;
     }
 
     button:hover {
-      background: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
     }
 
     #result {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #222;
+      margin-top: 25px;
+      font-size: 15px;
+      width: 100%;
+      text-align: center;
+      word-break: break-all;
+    }
+
+    /* Styles for the generated link injected by script.js */
+    #result a {
+      color: #4facfe;
+      text-decoration: none;
+      font-weight: 600;
+      background: rgba(79, 172, 254, 0.1);
+      padding: 10px 15px;
+      border-radius: 8px;
+      display: inline-block;
+      transition: background 0.3s ease;
+    }
+
+    #result a:hover {
+      background: rgba(79, 172, 254, 0.2);
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <h1>URL Shortener</h1>
-  <form id="shorten-form">
-    <input type="url" id="long-url" placeholder="Enter long URL" required />
-    <button type="submit">Shorten</button>
-  </form>
-  <div id="result"></div>
+  
+  <div class="container">
+    <h1>URL Shortener</h1>
+    <form id="shorten-form">
+      <input type="url" id="long-url" placeholder="Paste your long link here..." required />
+      <button type="submit">Shorten URL</button>
+    </form>
+    <div id="result"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>
